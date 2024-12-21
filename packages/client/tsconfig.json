@@ -21,5 +21,8 @@
     }
   },
   "include": ["src", "jest.setup.ts", "public"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [
+    { "path": "./tsconfig.node.json" },
+    { "path": "./tsconfig.server.json" }
+  ]
 }

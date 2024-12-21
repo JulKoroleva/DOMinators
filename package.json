@@ -46,6 +46,8 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@loadable/component": "^5.16.4",
+    "@loadable/server": "^5.16.5",
     "eslint-plugin-react": "^7.37.2"
   }
 }

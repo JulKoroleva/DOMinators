@@ -10,7 +10,7 @@ import { REQUIRED_FIELD_ERROR } from '@/constants/letters';
 import { IFieldConfig, IFormFieldProps } from './FormField.interface';
 
 import styles from './FormField.module.scss';
-import { CirclePickerField } from '../CirclePickerField/CirclePickerField';
+import { CirclePickerField } from '../CirclePickerField';
 
 export const FormField = <T extends FieldValues>({
   field,
