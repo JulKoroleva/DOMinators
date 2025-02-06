@@ -11,7 +11,7 @@ export default {
     '^.+\\.(png|jpe?g|gif|webp|avif|ico)$': 'jest-transform-stub',
   },
   transform: {
-    '^.+\\.svg$': 'jest-transform-stub',
+    '^.+\\.(svg|mp3|wav)$': 'jest-transform-stub',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   setupFiles: ['jest-canvas-mock'],

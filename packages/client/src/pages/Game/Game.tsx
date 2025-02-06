@@ -104,7 +104,7 @@ export const Game = () => {
           />
 
           <Popup open={isEndedGame} withOverlay={true}>
-            <EndGame results={result[0]} handleRepeat={handleRepeat} />
+            <EndGame isOpen={isEndedGame} results={result[0]} handleRepeat={handleRepeat} />
           </Popup>
         </>
       )}
