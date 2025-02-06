@@ -1,7 +1,9 @@
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { IEndGameProps } from './EndGame.interface';
+import { AudioComponent } from '../Audio';
 import tgLogo from '@/assets/icons/tgLogo.svg';
+import lose from '@/assets/media/lose.wav';
 import styles from './EndGame.module.scss';
 
 const SHARE_URL = 'https://github.com/JulKoroleva/DOMinators';
@@ -12,7 +14,7 @@ const handleShare = () => {
   window.open(link, '_blank');
 };
 
-export function EndGame({ results, handleRepeat }: IEndGameProps) {
+export function EndGame({ isOpen, results, handleRepeat }: IEndGameProps) {
   const navigate = useNavigate();
 
   const handleGoToMain = () => {
@@ -21,6 +23,7 @@ export function EndGame({ results, handleRepeat }: IEndGameProps) {
 
   return (
     <div className={styles['end-game']}>
+      {isOpen ? <AudioComponent src={lose} /> : null}
       <h2 className={styles['end-game__title']}>Match results</h2>
       <div className={styles['end-game__results']}>
         {results?.map(({ id, title, value }) => (
