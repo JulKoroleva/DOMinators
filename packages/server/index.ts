@@ -12,7 +12,11 @@ import { mainRouter } from './routes/main';
 const app = express();
 
 const corsOptions = {
-  origin: [`http://localhost:${process.env.CLIENT_PORT}`],
+  origin: [
+    `http://localhost:${process.env.CLIENT_PORT}`,
+    `http://51.250.28.166:${process.env.CLIENT_PORT}`,
+    `https://51.250.28.166:${process.env.CLIENT_PORT}`,
+  ],
   credentials: true,
 };
 
