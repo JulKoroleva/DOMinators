@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import { motion, AnimatePresence } from 'framer-motion';
-
+import sanitizeHtml from 'sanitize-html';
 import { Comment } from './components';
 import {
   FormComponent,
@@ -179,7 +179,9 @@ export function TopicPost({ id }: ITopicPostProps) {
         onMouseLeave={handleMouseLeave}
         ref={emojiRef}>
         <div className={styles['topic-post__info']}>
-          <span className={styles['topic-post__topic-author']}>{topicData?.creator}</span>
+          <span className={styles['topic-post__topic-author']}>
+            {sanitizeHtml(topicData?.creator ?? '')}
+          </span>
           <div>
             <span className={styles['topic-post__topic-date']}>
               {topicData?.createdAt &&
@@ -190,8 +192,12 @@ export function TopicPost({ id }: ITopicPostProps) {
             </span>
           </div>
         </div>
-        <span className={styles['topic-post__topic-title']}>{topicData?.title}</span>
-        <span className={styles['topic-post__topic-text']}>{topicData?.description}</span>
+        <span className={styles['topic-post__topic-title']}>
+          {sanitizeHtml(topicData?.title ?? '')}
+        </span>
+        <span className={styles['topic-post__topic-text']}>
+          {sanitizeHtml(topicData?.description ?? '')}
+        </span>
         {topicData !== null && <Reactions id={id} type="topic" reactions={topicData.reactions} />}
 
         {showPopup && (

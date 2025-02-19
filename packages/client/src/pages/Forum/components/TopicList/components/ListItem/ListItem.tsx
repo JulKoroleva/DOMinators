@@ -1,11 +1,12 @@
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import sanitizeHtml from 'sanitize-html';
 import { ROUTES } from '@/constants/routes';
 import { IListItemProps } from './ListItem.interface';
 import styles from './ListItem.module.scss';
 
 import { Reactions } from '@/components/EmojiReactions/EmojiReactions';
 import { useEmojiPopupVisibility } from '@/hooks/useEmojiPopupVisibility.hook';
-import { useRef } from 'react';
 
 export function ListItem({ topic }: IListItemProps) {
   const { id, title, createdAt, description, creator, comments, reactions } = topic;
@@ -36,8 +37,8 @@ export function ListItem({ topic }: IListItemProps) {
             {createdAt.includes('-') ? new Date(createdAt).toDateString() : createdAt}
           </span>
         </div>
-        <span className={styles['list-item__title']}>{title}</span>
-        <span className={styles['list-item__description']}>{description}</span>
+        <span className={styles['list-item__title']}>{sanitizeHtml(title)}</span>
+        <span className={styles['list-item__description']}>{sanitizeHtml(description)}</span>
 
         <Reactions id={id} type="topic" reactions={reactions} />
       </div>

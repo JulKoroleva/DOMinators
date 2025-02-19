@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
-
+import sanitizeHtml from 'sanitize-html';
 import { Reactions } from '@/components/EmojiReactions/EmojiReactions';
 import { IModalConfig, UniversalModal } from '@/components';
 
@@ -9,7 +9,6 @@ import { selectUser } from '@/redux/selectors';
 
 import { useEmojiPopupVisibility } from '@/hooks/useEmojiPopupVisibility.hook';
 import { useDeleteForumEntity } from '@/hooks/useDeleteForumEntity';
-
 import { IComment } from './Comment.interface';
 
 import trashButton from '@/assets/icons/trash.svg';
@@ -70,7 +69,7 @@ export function Comment({ comment, topicData }: IComment) {
       ref={emojiRef}>
       <div className={styles.comment__info}>
         <span className={styles.comment__author}>
-          {creator}
+          {sanitizeHtml(creator)}
           {creatorId === topicData.creatorId && (
             <span className={styles.comment__author_self}>{` author`}</span>
           )}
@@ -86,7 +85,7 @@ export function Comment({ comment, topicData }: IComment) {
           )}
         </div>
       </div>
-      <p className={styles.comment__text}>{message}</p>
+      <p className={styles.comment__text}>{sanitizeHtml(message)}</p>
       <Reactions id={id} type="comment" reactions={reactions} />
 
       {showPopup && (
