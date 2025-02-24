@@ -1,3 +1,4 @@
+import sanitizeHtml from 'sanitize-html';
 import { TLeaderBoardItemProps } from './LeaderBoardItem.interface';
 import styles from './LeaderBoardItem.module.scss';
 
@@ -13,7 +14,7 @@ export function LeaderBoardItem({ item }: TLeaderBoardItemProps) {
       <div className={styles['leaderboard-item__rank']}>
         <div className={styles['leaderboard-item__medal']}>{rank}</div>
       </div>
-      <div className={styles['leaderboard-item__name']}>{userName}</div>
+      <div className={styles['leaderboard-item__name']}>{sanitizeHtml(userName)}</div>
       <div className={styles['leaderboard-item__score']}>{score}</div>
     </div>
   );

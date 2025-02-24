@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { loadFull } from 'tsparticles';
 import Particles, { initParticlesEngine } from '@tsparticles/react';
 import { Container } from '@tsparticles/engine';
-
+import sanitizeHtml from 'sanitize-html';
 import { ErrorNotification } from '@/components';
 import { Button } from 'react-bootstrap';
 
@@ -162,7 +162,9 @@ export const Main = () => {
         )}
         <h1 className={styles['main-page__title']}>{HEADERS.main}</h1>
         <div className={styles['main-page__menu']}>
-          <h3 className={styles['main-page__menu_greetings']}>Hi, {userInfo?.login || 'Guest'}!</h3>
+          <h3 className={styles['main-page__menu_greetings']}>
+            Hi, {sanitizeHtml(userInfo?.login) || 'Guest'}!
+          </h3>
           <p className={styles['main-page__menu_description']}>{description}</p>
           <div className={styles['main-page__menu_buttons']}>
             {buttons
