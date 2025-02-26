@@ -39,12 +39,18 @@ import { useEmojiPopupVisibility } from '@/hooks/useEmojiPopupVisibility.hook';
 
 import { useDeleteForumEntity } from '@/hooks/useDeleteForumEntity';
 import { useIsAuthorized } from '@/services/hooks';
+import { getCookie } from '@/services/cookiesHandler';
 
 export function TopicPost({ id }: ITopicPostProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch<TypeDispatch>();
   const emojiRef = useRef<HTMLDivElement | null>(null);
-  const [isAuthorized] = useIsAuthorized();
+  const [isAuthorized, setIsAuthorized] = useIsAuthorized();
+  const authCookie = getCookie('auth');
+
+  useEffect(() => {
+    setIsAuthorized(!!authCookie);
+  }, [authCookie]);
 
   const { showPopup, handleMouseEnter, handleMouseLeave } = useEmojiPopupVisibility(100);
   const [topicData, setTopicData] = useState<TTopic | null>(null);
