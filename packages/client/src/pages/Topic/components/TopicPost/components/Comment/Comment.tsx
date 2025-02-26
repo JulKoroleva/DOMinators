@@ -9,6 +9,7 @@ import { selectUser } from '@/redux/selectors';
 
 import { useEmojiPopupVisibility } from '@/hooks/useEmojiPopupVisibility.hook';
 import { useDeleteForumEntity } from '@/hooks/useDeleteForumEntity';
+import { useIsAuthorized } from '@/services/hooks';
 import { IComment } from './Comment.interface';
 
 import trashButton from '@/assets/icons/trash.svg';
@@ -21,6 +22,7 @@ export function Comment({ comment, topicData }: IComment) {
   const emojiRef = useRef<HTMLDivElement | null>(null);
   const userInfo = useSelector(selectUser);
   const deleteTopicComment = useDeleteForumEntity();
+  const [isAuthorized] = useIsAuthorized();
 
   const [modalConfig, setModalConfig] = useState<IModalConfig>({
     show: false,
@@ -88,7 +90,7 @@ export function Comment({ comment, topicData }: IComment) {
       <p className={styles.comment__text}>{sanitizeHtml(message)}</p>
       <Reactions id={id} type="comment" reactions={reactions} />
 
-      {showPopup && (
+      {isAuthorized && showPopup && (
         <div id="reaction-popup" className={styles['reaction-popup']} ref={emojiRef}>
           <Reactions id={id} type="comment" showPopup={showPopup} emojiRef={emojiRef} />
         </div>
