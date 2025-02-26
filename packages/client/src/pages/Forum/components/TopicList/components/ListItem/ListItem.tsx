@@ -7,12 +7,14 @@ import styles from './ListItem.module.scss';
 
 import { Reactions } from '@/components/EmojiReactions/EmojiReactions';
 import { useEmojiPopupVisibility } from '@/hooks/useEmojiPopupVisibility.hook';
+import { useIsAuthorized } from '@/services/hooks';
 
 export function ListItem({ topic }: IListItemProps) {
   const { id, title, createdAt, description, creator, comments, reactions } = topic;
   const { showPopup, handleMouseEnter } = useEmojiPopupVisibility(100);
   const emojiRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
+  const [isAuthorized] = useIsAuthorized();
 
   const handleReadTopic = () => {
     navigate(ROUTES.topic(id));
@@ -43,7 +45,7 @@ export function ListItem({ topic }: IListItemProps) {
         <Reactions id={id} type="topic" reactions={reactions} />
       </div>
 
-      {showPopup && (
+      {isAuthorized && showPopup && (
         <div id="reaction-popup" className={styles['reaction-popup']} ref={emojiRef}>
           <Reactions id={id} type="topic" showPopup={showPopup} emojiRef={emojiRef} />
         </div>

@@ -38,11 +38,13 @@ import { Reactions } from '@/components/EmojiReactions/EmojiReactions';
 import { useEmojiPopupVisibility } from '@/hooks/useEmojiPopupVisibility.hook';
 
 import { useDeleteForumEntity } from '@/hooks/useDeleteForumEntity';
+import { useIsAuthorized } from '@/services/hooks';
 
 export function TopicPost({ id }: ITopicPostProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch<TypeDispatch>();
   const emojiRef = useRef<HTMLDivElement | null>(null);
+  const [isAuthorized] = useIsAuthorized();
 
   const { showPopup, handleMouseEnter, handleMouseLeave } = useEmojiPopupVisibility(100);
   const [topicData, setTopicData] = useState<TTopic | null>(null);
@@ -200,7 +202,7 @@ export function TopicPost({ id }: ITopicPostProps) {
         </span>
         {topicData !== null && <Reactions id={id} type="topic" reactions={topicData.reactions} />}
 
-        {showPopup && (
+        {isAuthorized && showPopup && (
           <div className={styles['reaction-popup']} ref={emojiRef}>
             <Reactions id={id} type="topic" showPopup={showPopup} emojiRef={emojiRef} />
           </div>
