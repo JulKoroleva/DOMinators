@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import sanitizeHtml from 'sanitize-html';
 import { ROUTES } from '@/constants/routes';
@@ -8,13 +8,19 @@ import styles from './ListItem.module.scss';
 import { Reactions } from '@/components/EmojiReactions/EmojiReactions';
 import { useEmojiPopupVisibility } from '@/hooks/useEmojiPopupVisibility.hook';
 import { useIsAuthorized } from '@/services/hooks';
+import { getCookie } from '@/services/cookiesHandler';
 
 export function ListItem({ topic }: IListItemProps) {
   const { id, title, createdAt, description, creator, comments, reactions } = topic;
   const { showPopup, handleMouseEnter } = useEmojiPopupVisibility(100);
   const emojiRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  const [isAuthorized] = useIsAuthorized();
+  const [isAuthorized, setIsAuthorized] = useIsAuthorized();
+  const authCookie = getCookie('auth');
+
+  useEffect(() => {
+    setIsAuthorized(!!authCookie);
+  }, [authCookie]);
 
   const handleReadTopic = () => {
     navigate(ROUTES.topic(id));

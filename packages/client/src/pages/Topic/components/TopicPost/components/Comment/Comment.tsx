@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import sanitizeHtml from 'sanitize-html';
@@ -10,6 +10,7 @@ import { selectUser } from '@/redux/selectors';
 import { useEmojiPopupVisibility } from '@/hooks/useEmojiPopupVisibility.hook';
 import { useDeleteForumEntity } from '@/hooks/useDeleteForumEntity';
 import { useIsAuthorized } from '@/services/hooks';
+import { getCookie } from '@/services/cookiesHandler';
 import { IComment } from './Comment.interface';
 
 import trashButton from '@/assets/icons/trash.svg';
@@ -22,7 +23,12 @@ export function Comment({ comment, topicData }: IComment) {
   const emojiRef = useRef<HTMLDivElement | null>(null);
   const userInfo = useSelector(selectUser);
   const deleteTopicComment = useDeleteForumEntity();
-  const [isAuthorized] = useIsAuthorized();
+  const [isAuthorized, setIsAuthorized] = useIsAuthorized();
+  const authCookie = getCookie('auth');
+
+  useEffect(() => {
+    setIsAuthorized(!!authCookie);
+  }, [authCookie]);
 
   const [modalConfig, setModalConfig] = useState<IModalConfig>({
     show: false,
